@@ -1,9 +1,7 @@
 from kink import di
 
-from .injectable import Injectable
 
-
-def register(injectable: Injectable):
+def register(injectable):
     di[injectable.get_fully_qualified_name()] = injectable
 
 

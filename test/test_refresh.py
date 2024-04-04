@@ -1,4 +1,4 @@
-from autowire.autowire import autowire
+from pyautowire import autowire
 from some_class import SomeClass
 
 

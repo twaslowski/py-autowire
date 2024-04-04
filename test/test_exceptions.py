@@ -1,7 +1,7 @@
 import pytest
 
-from autowire import cache
-from autowire.autowire import (
+from pyautowire import (
+    cache,
     autowire,
     ParameterNotInCacheError,
     ParameterNotInSignatureError,

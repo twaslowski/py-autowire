@@ -1,4 +1,4 @@
-from context.autowire import Injectable
+from pyautowire import Injectable
 
 
 class SomeClass(Injectable):

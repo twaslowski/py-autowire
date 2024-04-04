@@ -1,7 +1,7 @@
 import inspect
 from kink import di
 
-from injectable import Injectable
+from pyautowire.injectable import Injectable
 
 
 class ParameterNotInSignatureError(Exception):
