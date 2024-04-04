@@ -1,4 +1,4 @@
-# pyautowire
+# pyautowire ![PyPI](https://img.shields.io/pypi/v/pyautowire) ![Linting and Tests](https://github.com/twaslowski/py-autowire/actions/workflows/test.yml/badge.svg)
 
 Lightweight dependency injection for Python that autowires into _anything_.
 
