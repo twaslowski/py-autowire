@@ -4,7 +4,11 @@ from pyautowire import (
     cache,
     autowire,
 )
-from pyautowire.error import ParameterNotInCacheError, ParameterNotInSignatureError
+from pyautowire.error import (
+    ParameterNotInCacheError,
+    ParameterNotInSignatureError,
+    ParameterNotInjectableError,
+)
 from some_class import SomeClass
 
 
@@ -28,4 +32,13 @@ def test_exception_thrown_on_argument_mismatch():
         return some_class.field
 
     with pytest.raises(ParameterNotInSignatureError):
+        test_func()
+
+
+def test_exception_thrown_when_non_injectable_is_requested():
+    @autowire("non_injectable_class")
+    def test_func(non_injectable_class: str):
+        return non_injectable_class
+
+    with pytest.raises(ParameterNotInjectableError):
         test_func()

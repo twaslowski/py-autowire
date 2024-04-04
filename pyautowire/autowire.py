@@ -1,7 +1,11 @@
 import inspect
 from pyautowire import cache
 
-from pyautowire.error import ParameterNotInSignatureError, ParameterNotInCacheError
+from pyautowire.error import (
+    ParameterNotInSignatureError,
+    ParameterNotInCacheError,
+    ParameterNotInjectableError,
+)
 
 from pyautowire.injectable import Injectable
 
@@ -28,14 +32,19 @@ def autowire(*autowire_params):
                     raise ParameterNotInSignatureError(name)
                 param = sig.parameters[name]
                 param_type = param.annotation
-                if inspect.isclass(param_type) and issubclass(param_type, Injectable):
-                    if not cache.contains(param_type):
-                        raise ParameterNotInCacheError(
-                            param_type.get_fully_qualified_name()
-                        )
-                    kwargs[name] = cache.get(param_type)
+                if not is_injectable(param_type):
+                    raise ParameterNotInjectableError(param_type)
+                if not cache.contains(param_type):
+                    raise ParameterNotInCacheError(
+                        param_type.get_fully_qualified_name()
+                    )
+                kwargs[name] = cache.get(param_type)
             return func(*args, **kwargs)
 
         return wrapper
 
     return decorator
+
+
+def is_injectable(param_type):
+    return inspect.isclass(param_type) and issubclass(param_type, Injectable)
