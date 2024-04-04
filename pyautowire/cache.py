@@ -1,9 +1,15 @@
 from kink import di
 
+from typing import TYPE_CHECKING
 
-def register(injectable):
+if TYPE_CHECKING:
+    from pyautowire.injectable import Injectable
+
+
+def register(injectable: "Injectable") -> "Injectable":
     di[injectable.get_fully_qualified_name()] = injectable
+    return injectable
 
 
-def clear():
+def clear() -> None:
     di._services = {}

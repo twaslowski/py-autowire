@@ -1,6 +1,6 @@
 import logging
 
-from pyautowire.cache import register
+from pyautowire import cache
 
 
 class Injectable:
@@ -10,9 +10,9 @@ class Injectable:
 
     def register(self):
         logging.info(f"Registering {self.get_fully_qualified_name()} as singleton.")
-        register(self)
+        cache.register(self)
         return self
 
     def refresh(self):
         logging.info(f"Refreshing {self.get_fully_qualified_name()} instance.")
-        register(self)
+        cache.register(self)
