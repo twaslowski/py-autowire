@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyautowire"
-version = "0.1.0"
+version = "0.2.0"
 description = "Good enough autowiring for Python"
 authors = ["Tobias Waslowski <tobias.waslowski@gmail.com>"]
 license = "gpl3"

@@ -15,5 +15,5 @@ class Injectable:
         `configuration = MyConfiguration().register()`
         :return:
         """
-        logging.info(f"Registering {self.get_fully_qualified_name()} as singleton.")
+        logging.debug(f"Registering {self.get_fully_qualified_name()} as singleton.")
         return cache.register(self)

@@ -1,5 +1,5 @@
 import inspect
-from kink import di
+from pyautowire import cache
 
 from pyautowire.error import ParameterNotInSignatureError, ParameterNotInCacheError
 
@@ -29,10 +29,11 @@ def autowire(*autowire_params):
                 param = sig.parameters[name]
                 param_type = param.annotation
                 if inspect.isclass(param_type) and issubclass(param_type, Injectable):
-                    fully_qualified_name = param_type.get_fully_qualified_name()
-                    if fully_qualified_name not in di:
-                        raise ParameterNotInCacheError(fully_qualified_name)
-                    kwargs[name] = di[fully_qualified_name]
+                    if not cache.contains(param_type):
+                        raise ParameterNotInCacheError(
+                            param_type.get_fully_qualified_name()
+                        )
+                    kwargs[name] = cache.get(param_type)
             return func(*args, **kwargs)
 
         return wrapper
