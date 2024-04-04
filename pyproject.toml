@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "py-autowire"
+name = "pyautowire"
 version = "0.1.0"
 description = "Good enough autowiring for Python"
 authors = ["Tobias Waslowski <tobias.waslowski@gmail.com>"]

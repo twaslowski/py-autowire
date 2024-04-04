@@ -7,7 +7,7 @@ from injectable import Injectable
 class ParameterNotInSignatureError(Exception):
     def __init__(self, parameter):
         self.parameter = parameter
-        self.message = f"Parameter '{self.parameter}' specified in @autowire is not in the function signature"
+        self.message = f"Parameter '{self.parameter}' specified in @pyautowire is not in the function signature"
         super().__init__(self.message)
 
 
@@ -25,7 +25,7 @@ def autowire(*autowire_params):
     - Are specified in the decorator arguments
     - Are of a class that is a subclass of Injectable
     - They exist within kink's dependency injection container
-    :param autowire_params: names of parameters to autowire
+    :param autowire_params: names of parameters to pyautowire
     :return: fully autowired function
     """
 
@@ -35,7 +35,7 @@ def autowire(*autowire_params):
         def wrapper(*args, **kwargs):
             for (
                 name
-            ) in autowire_params:  # Check if the parameter is in the autowire list
+            ) in autowire_params:  # Check if the parameter is in the pyautowire list
                 if name not in sig.parameters:
                     raise ParameterNotInSignatureError(name)
                 param = sig.parameters[name]
