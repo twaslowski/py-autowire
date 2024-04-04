@@ -1,21 +1,9 @@
 import inspect
 from kink import di
 
+from pyautowire.error import ParameterNotInSignatureError, ParameterNotInCacheError
+
 from pyautowire.injectable import Injectable
-
-
-class ParameterNotInSignatureError(Exception):
-    def __init__(self, parameter):
-        self.parameter = parameter
-        self.message = f"Parameter '{self.parameter}' specified in @pyautowire is not in the function signature"
-        super().__init__(self.message)
-
-
-class ParameterNotInCacheError(Exception):
-    def __init__(self, parameter):
-        self.parameter = parameter
-        self.message = f"Parameter '{self.parameter}' does not exist in the 'di' cache"
-        super().__init__(self.message)
 
 
 def autowire(*autowire_params):

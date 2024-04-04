@@ -8,11 +8,12 @@ class Injectable:
     def get_fully_qualified_name(cls) -> str:
         return f"{cls.__module__}.{cls.__name__}"
 
-    def register(self):
+    def register(self) -> "Injectable":
+        """
+        Registers this Injectable instance in the cache.
+        Returns itself as a convenience, such that you can call e.g.
+        `configuration = MyConfiguration().register()`
+        :return:
+        """
         logging.info(f"Registering {self.get_fully_qualified_name()} as singleton.")
-        cache.register(self)
-        return self
-
-    def refresh(self):
-        logging.info(f"Refreshing {self.get_fully_qualified_name()} instance.")
-        cache.register(self)
+        return cache.register(self)

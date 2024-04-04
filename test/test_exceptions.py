@@ -3,9 +3,8 @@ import pytest
 from pyautowire import (
     cache,
     autowire,
-    ParameterNotInCacheError,
-    ParameterNotInSignatureError,
 )
+from pyautowire.error import ParameterNotInCacheError, ParameterNotInSignatureError
 from some_class import SomeClass
 
 
