@@ -26,11 +26,6 @@ jobs:
       - name: Make build
         run: |
           poetry build
-      - name: Upload artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: kink-${{ steps.tag.outputs.tag }}.tar.gz
-          path: dist/kink-${{ steps.tag.outputs.tag }}.tar.gz
       - name: Publish release
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
