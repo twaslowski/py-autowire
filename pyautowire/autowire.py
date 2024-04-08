@@ -1,4 +1,6 @@
 import inspect
+import logging
+
 from pyautowire import cache
 
 from pyautowire.error import (
@@ -26,19 +28,28 @@ def autowire(*autowire_params):
 
         def wrapper(*args, **kwargs):
             for (
-                name
+                arg_name
             ) in autowire_params:  # Check if the parameter is in the pyautowire list
-                if name not in sig.parameters:
-                    raise ParameterNotInSignatureError(name)
-                param = sig.parameters[name]
+                if arg_name not in sig.parameters:
+                    raise ParameterNotInSignatureError(arg_name)
+                param = sig.parameters[arg_name]
                 param_type = param.annotation
                 if not is_injectable(param_type):
                     raise ParameterNotInjectableError(param_type)
-                if not cache.contains(param_type):
-                    raise ParameterNotInCacheError(
-                        param_type.get_fully_qualified_name()
+                if cache.contains(param_type):
+                    logging.debug(
+                        "Cache hit for class %s", param_type.get_fully_qualified_name()
                     )
-                kwargs[name] = cache.get(param_type)
+                    kwargs[arg_name] = cache.get(param_type)
+                else:
+                    if cache.contains_alias(arg_name):
+                        logging.debug("Cache hit for alias %s", arg_name)
+                        kwargs[arg_name] = cache.get_alias(arg_name)
+                        continue
+                    else:
+                        raise ParameterNotInCacheError(
+                            param_type.get_fully_qualified_name()
+                        )
             return func(*args, **kwargs)
 
         return wrapper

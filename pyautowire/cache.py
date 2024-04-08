@@ -14,6 +14,12 @@ def register(injectable: "Injectable") -> "Injectable":
     return injectable
 
 
+def register_alias(injectable: "Injectable", alias: str) -> "Injectable":
+    di[alias] = injectable
+
+    return injectable
+
+
 def contains(injectable: "Injectable") -> bool:
     lookup_result = injectable.get_fully_qualified_name() in di
     logging.debug(
@@ -22,8 +28,18 @@ def contains(injectable: "Injectable") -> bool:
     return lookup_result
 
 
+def contains_alias(alias: str) -> bool:
+    lookup_result = alias in di
+    logging.debug(f"Checking if alias {alias} is in cache: {lookup_result}")
+    return lookup_result
+
+
 def get(injectable: "Injectable") -> "Injectable":
     return di[injectable.get_fully_qualified_name()]
+
+
+def get_alias(alias: str) -> "Injectable":
+    return di[alias]
 
 
 def clear() -> None:

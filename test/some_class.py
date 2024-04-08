@@ -1,7 +1,7 @@
 from pyautowire import Injectable
 
 
-class SomeClass(Injectable):
+class A(Injectable):
     field: str
 
     def __init__(self, field: str = "some-value"):

@@ -9,7 +9,7 @@ from pyautowire.error import (
     ParameterNotInSignatureError,
     ParameterNotInjectableError,
 )
-from some_class import SomeClass
+from some_class import A
 
 
 def test_exception_thrown_when_di_cache_is_empty():
@@ -17,7 +17,7 @@ def test_exception_thrown_when_di_cache_is_empty():
     cache.clear()
 
     @autowire("some_class")
-    def test_func(some_class: SomeClass):
+    def test_func(some_class: A):
         return some_class.field
 
     with pytest.raises(ParameterNotInCacheError):
@@ -25,10 +25,10 @@ def test_exception_thrown_when_di_cache_is_empty():
 
 
 def test_exception_thrown_on_argument_mismatch():
-    SomeClass().register()
+    A().register()
 
     @autowire("another_class")
-    def test_func(some_class: SomeClass):
+    def test_func(some_class: A):
         return some_class.field
 
     with pytest.raises(ParameterNotInSignatureError):
