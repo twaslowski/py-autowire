@@ -32,6 +32,8 @@ def autowire(*autowire_params):
             ) in autowire_params:  # Check if the parameter is in the pyautowire list
                 if arg_name not in sig.parameters:
                     raise ParameterNotInSignatureError(arg_name)
+                if arg_name in kwargs:
+                    continue
                 param = sig.parameters[arg_name]
                 param_type = param.annotation
                 if not is_injectable(param_type):
